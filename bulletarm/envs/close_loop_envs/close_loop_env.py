@@ -12,8 +12,8 @@ import cv2
 class CloseLoopEnv(BaseEnv):
   def __init__(self, config):
     if 'workspace' not in config:
-      config['workspace'] = np.asarray([[0.3, 0.6],
-                                        [-0.15, 0.15],
+      config['workspace'] = np.asarray([[0.25, 0.65],
+                                        [-0.2, 0.2],
                                         [0.01, 0.25]])
     if 'robot' not in config:
       config['robot'] = 'kuka'
