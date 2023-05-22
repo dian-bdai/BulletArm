@@ -244,6 +244,8 @@ class CloseLoopEnv(BaseEnv):
       # add channel dimension if view is depth only
       if self.view_type.find('rgb') == -1:
         heightmap = heightmap.reshape([1, self.heightmap_size, self.heightmap_size])
+      seg_img = self.sensor.getSegmentationImg(self.heightmap_size)
+      heightmap = np.concatenate((heightmap, seg_img.reshape([1, self.heightmap_size, self.heightmap_size])))
       return self._isHolding(), None, heightmap
     else:
       obs = self._getVecObservation()

@@ -32,6 +32,14 @@ class Sensor(object):
 
     return np.abs(depth - np.max(depth)).reshape(size, size)
 
+  def getSegmentationImg(self, size):
+    image_arr = pb.getCameraImage(width=size, height=size,
+                                  viewMatrix=self.view_matrix,
+                                  projectionMatrix=self.proj_matrix,
+                                  renderer=pb.ER_TINY_RENDERER)
+    seg_img = np.array(image_arr[4])
+    return seg_img
+
   def getRGBImg(self, size):
     image_arr = pb.getCameraImage(width=size, height=size,
                                   viewMatrix=self.view_matrix,
