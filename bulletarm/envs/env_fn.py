@@ -60,6 +60,7 @@ from bulletarm.envs.close_loop_envs.close_loop_block_reaching import createClose
 from bulletarm.envs.close_loop_envs.close_loop_block_stacking import createCloseLoopBlockStackingEnv
 from bulletarm.envs.close_loop_envs.close_loop_block_pulling import createCloseLoopBlockPullingEnv
 from bulletarm.envs.close_loop_envs.close_loop_house_building_1 import createCloseLoopHouseBuilding1Env
+from bulletarm.envs.close_loop_envs.close_loop_house_building_2 import createCloseLoopHouseBuilding2Env
 from bulletarm.envs.close_loop_envs.close_loop_block_picking_corner import createCloseLoopBlockPickingCornerEnv
 from bulletarm.envs.close_loop_envs.close_loop_drawer_opening import createCloseLoopDrawerOpeningEnv
 from bulletarm.envs.close_loop_envs.close_loop_household_picking import createCloseLoopHouseholdPickingEnv
@@ -123,6 +124,7 @@ CREATE_ENV_FNS = {
   'close_loop_block_stacking': createCloseLoopBlockStackingEnv,
   'close_loop_block_pulling': createCloseLoopBlockPullingEnv,
   'close_loop_house_building_1': createCloseLoopHouseBuilding1Env,
+  'close_loop_house_building_2': createCloseLoopHouseBuilding2Env,
   'close_loop_block_picking_corner': createCloseLoopBlockPickingCornerEnv,
   'close_loop_drawer_opening': createCloseLoopDrawerOpeningEnv,
   'close_loop_household_picking': createCloseLoopHouseholdPickingEnv,

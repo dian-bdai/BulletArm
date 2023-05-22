@@ -22,6 +22,7 @@ from bulletarm.planners.close_loop_block_picking_planner import CloseLoopBlockPi
 from bulletarm.planners.close_loop_block_stacking_planner import CloseLoopBlockStackingPlanner
 from bulletarm.planners.close_loop_block_pulling_planner import CloseLoopBlockPullingPlanner
 from bulletarm.planners.close_loop_house_building_1_planner import CloseLoopHouseBuilding1Planner
+from bulletarm.planners.close_loop_house_building_2_planner import CloseLoopHouseBuilding2Planner
 from bulletarm.planners.close_loop_block_picking_corner_planner import CloseLoopBlockPickingCornerPlanner
 from bulletarm.planners.close_loop_drawer_opening_planner import CloseLoopDrawerOpeningPlanner
 from bulletarm.planners.close_loop_household_picking_cluttered_planner import CloseLoopHouseholdPickingClutteredPlanner
@@ -78,6 +79,7 @@ PLANNERS = {
   'close_loop_block_stacking':CloseLoopBlockStackingPlanner,
   'close_loop_block_pulling':CloseLoopBlockPullingPlanner,
   'close_loop_house_building_1':CloseLoopHouseBuilding1Planner,
+  'close_loop_house_building_2':CloseLoopHouseBuilding2Planner,
   'close_loop_block_picking_corner':CloseLoopBlockPickingCornerPlanner,
   'close_loop_drawer_opening':CloseLoopDrawerOpeningPlanner,
   'close_loop_household_picking':CloseLoopBlockPickingPlanner,

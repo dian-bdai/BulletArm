@@ -56,7 +56,14 @@ class HouseBuilding2Planner(BlockStructureBasePlanner):
     valid_block_pos = self.dist_valid(dist)
     # block pos not valid, adjust block pos => pick block
     if not valid_block_pos:
-      return self.pickSecondTallestObjOnTop(objects=blocks)
+      ws_center = self.env.workspace.mean(1)[:2]
+      dist1 = np.linalg.norm(np.array(block1_pos[:2]) - np.array(ws_center))
+      dist2 = np.linalg.norm(np.array(block2_pos[:2]) - np.array(ws_center))
+      if dist1 > dist2:
+        objects = [blocks[0]]
+      else:
+        objects = [blocks[1]]
+      return self.pickSecondTallestObjOnTop(objects=objects)
     # block pos valid, pick roof
     else:
       return self.pickSecondTallestObjOnTop(objects=roofs)
