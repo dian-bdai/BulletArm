@@ -5,6 +5,8 @@
 import os
 import pickle
 import copy
+import time
+import datetime
 import numpy as np
 import numpy.random as npr
 from scipy.ndimage import median_filter
@@ -194,6 +196,26 @@ class BaseEnv:
     self.last_obj = None
     self.state = {}
     self.pb_state = None
+    self.log_dir = config['log_dir']
+    self.log_video = config['log_video']
+    self.log_dir_success = os.path.join(self.log_dir, 'success')
+    self.log_dir_failure = os.path.join(self.log_dir, 'failure')
+    self.current_logging_file = None
+    self.current_logging_id = None
+    if not os.path.exists(self.log_dir):
+      os.makedirs(self.log_dir)
+    if not os.path.exists(self.log_dir_success):
+      os.makedirs(self.log_dir_success)
+    if not os.path.exists(self.log_dir_failure):
+      os.makedirs(self.log_dir_failure)
+
+    if self.log_video:
+      pb.configureDebugVisualizer(pb.COV_ENABLE_GUI, 0)
+      pb.resetDebugVisualizerCamera(
+        cameraDistance=1.1,
+        cameraYaw=90,
+        cameraPitch=-30,
+        cameraTargetPosition=[0, 0, 0])
 
   def initialize(self):
     '''
@@ -271,6 +293,8 @@ class BaseEnv:
         break
 
     pb.stepSimulation()
+    if self.log_video:
+      self.startLogging()
 
   def reset(self):
     '''
@@ -302,6 +326,9 @@ class BaseEnv:
     if not done:
       done = self.current_episode_steps >= self.max_steps or not self.isSimValid()
     self.current_episode_steps += 1
+
+    if done and self.log_video and self.current_logging_file is not None:
+      self.stopLogging(success=(reward>0))
 
     return obs, reward, done
 
@@ -1156,3 +1183,18 @@ class BaseEnv:
       state = pickle.load(f)
     self.restoreStateDict(state)
 
+  def startLogging(self):
+    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d.%H:%M:%S')
+    self.current_logging_file = os.path.join(self.log_dir, f'{timestamp}.mp4')
+    self.current_logging_id = pb.startStateLogging(pb.STATE_LOGGING_VIDEO_MP4, fileName=self.current_logging_file)
+
+  def stopLogging(self, success=True):
+    pb.stopStateLogging(self.current_logging_id)
+    if success:
+      os.rename(self.current_logging_file,
+                os.path.join(self.log_dir_success, self.current_logging_file.split('/')[-1]))
+    else:
+      os.rename(self.current_logging_file,
+                os.path.join(self.log_dir_failure, self.current_logging_file.split('/')[-1]))
+    self.current_logging_file = None
+    self.current_logging_id = None

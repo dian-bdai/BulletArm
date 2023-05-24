@@ -89,6 +89,9 @@ DEFAULT_CONFIG = {
   # Example: 'workspace_option': ['white_plane', 'black_workspace']
   'workspace_option': [],
 
+  'log_video': False,
+  'log_dir': '/tmp/pb_video',
+
   ## Deprecated parameters ##
   'pos_candidate': None,
   'perfect_grasp': False,

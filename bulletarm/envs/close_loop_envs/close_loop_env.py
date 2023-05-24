@@ -150,6 +150,9 @@ class CloseLoopEnv(BaseEnv):
 
     self.simulate_pos = pos
     self.simulate_rot = rot
+
+    if done and self.log_video and self.current_logging_file is not None:
+      self.stopLogging(success=(reward>0))
     return obs, reward, done
 
   def setRobotHoldingObj(self):
