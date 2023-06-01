@@ -186,3 +186,9 @@ class Kuka(RobotBase):
                                  pb.POSITION_CONTROL,
                                  [-target_pos1, target_pos2, 0, 0],
                                  forces=[force, force,  force, force])
+
+  def setInvisible(self):
+    for i in range(-1, 10):
+      pb.changeVisualShape(self.id, i, rgbaColor=[0, 0, 0, 0])
+    pb.changeVisualShape(self.id, 11, rgbaColor=[0, 0, 0, 0])
+    pb.changeVisualShape(self.id, 12, rgbaColor=[0, 0, 0, 0])

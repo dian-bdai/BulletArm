@@ -75,6 +75,8 @@ class CloseLoopEnv(BaseEnv):
     if self.has_tray:
       self.tray.initialize(pos=[self.workspace[0].mean(), self.workspace[1].mean(), 0],
                            size=[self.bin_size, self.bin_size, 0.1])
+    if self.view_type == 'camera_fix_height':
+      self.robot.setInvisible()
 
   def initSensor(self):
     cam_pos = [self.workspace[0].mean(), self.workspace[1].mean(), 0.29]
