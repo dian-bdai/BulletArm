@@ -202,14 +202,14 @@ class BaseEnv:
     self.log_dir_failure = os.path.join(self.log_dir, 'failure')
     self.current_logging_file = None
     self.current_logging_id = None
-    if not os.path.exists(self.log_dir):
-      os.makedirs(self.log_dir)
-    if not os.path.exists(self.log_dir_success):
-      os.makedirs(self.log_dir_success)
-    if not os.path.exists(self.log_dir_failure):
-      os.makedirs(self.log_dir_failure)
 
     if self.log_video:
+      if not os.path.exists(self.log_dir):
+        os.makedirs(self.log_dir)
+      if not os.path.exists(self.log_dir_success):
+        os.makedirs(self.log_dir_success)
+      if not os.path.exists(self.log_dir_failure):
+        os.makedirs(self.log_dir_failure)
       pb.configureDebugVisualizer(pb.COV_ENABLE_GUI, 0)
       pb.resetDebugVisualizerCamera(
         cameraDistance=1.1,
