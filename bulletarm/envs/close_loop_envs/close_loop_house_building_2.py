@@ -4,7 +4,7 @@ import numpy as np
 from bulletarm.pybullet.utils import constants
 from bulletarm.envs.close_loop_envs.close_loop_env import CloseLoopEnv
 from bulletarm.pybullet.utils import transformations
-from bulletarm.planners.close_loop_house_building_1_planner import CloseLoopHouseBuilding1Planner
+from bulletarm.planners.close_loop_house_building_2_planner import CloseLoopHouseBuilding2Planner
 from bulletarm.pybullet.utils.constants import NoValidPositionException
 
 class CloseLoopHouseBuilding2Env(CloseLoopEnv):
@@ -18,8 +18,12 @@ class CloseLoopHouseBuilding2Env(CloseLoopEnv):
   def __init__(self, config):
     if 'object_scale_range' not in config:
       config['object_scale_range'] = [0.8, 0.8]
+    if 'stage' not in config:
+      config['stage'] = 0
     config['num_objects'] = 3
     super().__init__(config)
+    self.stage = config['stage']
+    self.planner = CloseLoopHouseBuilding2Planner(self, {'random_orientation': True, 'dpos': 1, 'drot': np.pi * 2})
 
   def reset(self):
     while True:
@@ -32,6 +36,8 @@ class CloseLoopHouseBuilding2Env(CloseLoopEnv):
         continue
       else:
         break
+    for i in range(self.stage):
+      self.step(self.planner.getNextAction())
     return self._getObservation()
 
   def _getValidOrientation(self, random_orientation):

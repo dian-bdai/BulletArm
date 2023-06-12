@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 from bulletarm import env_factory
 
 class TestBulletCloseLoopHouseBuilding2(unittest.TestCase):
-  env_config = {'view_type': 'camera_fix_height', 'workspace_option': ['black_workspace'], 'view_scale': 1}
+  env_config = {'view_type': 'camera_center_xyz', 'workspace_option': ['black_workspace'], 'view_scale': 1, 'log_video': False, 'max_steps': 120,
+                'stage': 0}
 
   planner_config = {'random_orientation': True, 'dpos': 0.02, 'drot': np.pi / 8}
 
@@ -20,16 +21,16 @@ class TestBulletCloseLoopHouseBuilding2(unittest.TestCase):
     total = 0
     s = 0
     step_times = []
-    env.reset()
+    (states_, in_hands_, obs_) = env.reset()
     pbar = tqdm(total=500)
     while total < 500:
       t0 = time.time()
       action = env.getNextAction()
       t_plan = time.time() - t0
+      # plt.imshow(obs_[0, 0])
+      # plt.colorbar()
+      # plt.show()
       (states_, in_hands_, obs_), rewards, dones = env.step(action, auto_reset=True)
-      plt.imshow(obs_[0, 0])
-      plt.colorbar()
-      plt.show()
       # print(states_)
       s += rewards.sum()
       total += dones.sum()
