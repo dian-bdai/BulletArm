@@ -1198,3 +1198,6 @@ class BaseEnv:
                 os.path.join(self.log_dir_failure, self.current_logging_file.split('/')[-1]))
     self.current_logging_file = None
     self.current_logging_id = None
+
+  def setSeed(self, seed):
+    npr.seed(seed)

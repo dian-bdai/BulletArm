@@ -81,6 +81,8 @@ def worker(remote, parent_remote, env_fn, planner_fn=None):
           remote.send(False)
         else:
           remote.send(True)
+      elif cmd == 'set_seed':
+        env.setSeed(data)
       elif cmd == 'close':
         remote.close()
         break
@@ -240,6 +242,17 @@ class MultiRunner(object):
     obs = np.stack(obs)
 
     return (states, hand_obs, obs)
+
+  def setSeed(self, seeds):
+    '''
+    Reset environment seeds
+
+    Args:
+      actions (numpy.array): Actions to take in each environment
+      auto_reset (bool): Reset environments automatically after an episode ends
+    '''
+    for remote, seed in zip(self.remotes, seeds):
+      remote.send(('set_seed', seed))
 
   def close(self):
     '''
